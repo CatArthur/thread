@@ -3,6 +3,7 @@ package com.bignerdranch.android.myapplication;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.concurrent.TimeUnit;
@@ -30,12 +31,24 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             protected Object doInBackground(Object[] params) {
-                    TimeUnit t=new TimeUnit();
-                t.sleep(10);
+                try {
+                    TimeUnit.SECONDS.sleep(10);
+                }catch (Exception e){}
                 return null;
             }
-        }
-        my i=new my();
 
+            @Override
+            protected void onProgressUpdate(Object[] values) {
+                tw.setText("Process");
+                super.onProgressUpdate(values);
+            }
+        }
+        final my i=new my();
+        tw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                i.execute();
+            }
+        });
     }
 }
